@@ -9,10 +9,26 @@ function Cadastro() {
     setComponentSize(size);
   };
 
+  const [form] = Form.useForm();
+
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  const errors = form.getFieldsError();
+  const hasErrors = Object.keys(errors).some((field) => errors[field]);
+
   return (
     <div className="Cadastro">
       <h1 className="tituloPainel">PAINEL DE CONTROLE</h1>
       <Form
+        form={form}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
         labelCol={{
           span: 5,
         }}
@@ -24,17 +40,32 @@ function Cadastro() {
         }}
         onValuesChange={onFormLayoutChange}
         size={componentSize}
+        className={hasErrors ? "ant-form-item-has-error" : ""}
       >
-        <Form.Item label="Tipo de dado">
+        <Form.Item
+          label="Tipo de dado"
+          name="tipoDado"
+          rules={[
+            { required: true, message: "Por favor selecione um tipo de dado!" },
+          ]}
+        >
           <Select>
             <Select.Option value="entrada">Entrada</Select.Option>
             <Select.Option value="Saída">Saída</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Nome">
+        <Form.Item
+          label="Nome"
+          name="nome"
+          rules={[{ required: true, message: "Por favor insira um nome!" }]}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="Valor R$">
+        <Form.Item
+          label="Valor R$"
+          name="valor"
+          rules={[{ required: true, message: "Por favor insira um valor!" }]}
+        >
           <Input
             type="number"
             min="0"
@@ -42,11 +73,17 @@ function Cadastro() {
             placeholder="Valor em R$(real)"
           />
         </Form.Item>
-        <Form.Item label="Data">
+        <Form.Item
+          label="Data"
+          name="data"
+          rules={[{ required: true, message: "Por favor insira uma data!" }]}
+        >
           <DatePicker className="data" format={"DD-MM-YYYY"} locale={locale} />
         </Form.Item>
         <Form.Item>
-          <Button>Cadastrar</Button>
+          <Button type="primary" onClick={() => form.validateFields()}>
+            Cadastrar
+          </Button>
         </Form.Item>
       </Form>
     </div>
