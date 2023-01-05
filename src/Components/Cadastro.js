@@ -81,7 +81,11 @@ function Cadastro() {
           <DatePicker className="data" format={"DD-MM-YYYY"} locale={locale} />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={() => form.validateFields()}>
+          <Button
+            type="primary"
+            onClick={() => form.validateFields()}
+            className="cadastrar"
+          >
             Cadastrar
           </Button>
         </Form.Item>

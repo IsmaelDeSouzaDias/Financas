@@ -23,3 +23,8 @@ label {
     color: rgb(213, 122, 25) !important;
     font-weight: 600;
 }
+
+.cadastrar:active {
+    position: relative;
+    top: 2px;
+}
