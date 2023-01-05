@@ -40,6 +40,7 @@ function Entrada() {
 
   return (
     <div className="Entrada">
+      <h1 className="titulo">ENTRADA</h1>
       <Table columns={columns} dataSource={data} onChange={onChange} />
       <h4 className="total">
         <span>Total:</span> R$ 2160,00

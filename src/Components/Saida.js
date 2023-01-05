@@ -40,6 +40,7 @@ function Saida() {
 
   return (
     <div className="Saida">
+      <h1 className="titulo">SAÍDA</h1>
       <Table columns={columns} dataSource={data} onChange={onChange} />
       <h4 className="total">
         <span>Total:</span> R$ 400,00

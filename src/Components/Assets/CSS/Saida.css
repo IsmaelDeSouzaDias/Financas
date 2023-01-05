@@ -4,6 +4,13 @@
     margin-top: 50px;
 }
 
+.titulo {
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color:  rgb(213, 122, 25);
+}
+
 .total {
     color: rgb(234, 192, 23); 
     

@@ -47,6 +47,7 @@ function Geral() {
 
   return (
     <div className="Geral">
+      <h1 className="titulo">GERAL</h1>
       <Table columns={columns} dataSource={data} onChange={onChange} />
       <h4 className="total">
         <span>Total:</span> R$ 1760,00
