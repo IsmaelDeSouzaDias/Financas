@@ -1,0 +1,14 @@
+.Entrada {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.total {
+    color: rgb(234, 192, 23); 
+    
+}
+
+.total span {
+    color: rgb(213, 122, 25);
+}
