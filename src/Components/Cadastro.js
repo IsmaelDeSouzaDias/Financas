@@ -72,8 +72,8 @@ function Cadastro() {
           ]}
         >
           <Select value={tipoDado} onChange={(value) => setTipoDado(value)}>
-            <Select.Option value="entrada">Entrada</Select.Option>
-            <Select.Option value="saída">Saída</Select.Option>
+            <Select.Option value="Entrada">Entrada</Select.Option>
+            <Select.Option value="Saída">Saída</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
