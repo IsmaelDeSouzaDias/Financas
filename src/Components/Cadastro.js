@@ -4,6 +4,11 @@ import { Button, DatePicker, Form, Input, Select } from "antd";
 import locale from "antd/es/date-picker/locale/pt_BR";
 
 function Cadastro() {
+  const [tipoDado, setTipoDado] = useState("");
+  const [nome, setNome] = useState("");
+  const [valor, setValor] = useState(0);
+  const [data, setData] = useState("");
+
   const [componentSize, setComponentSize] = useState("default");
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
@@ -11,16 +16,29 @@ function Cadastro() {
 
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+   const onFinish = async (values) => {
+    await fetch("http://localhost:5000/cadastro", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        tipoDado: values.tipoDado,
+        nome: values.nome,
+        valor: values.valor,
+        data: values.data,
+      }),
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
-  const errors = form.getFieldsError();
-  const hasErrors = Object.keys(errors).some((field) => errors[field]);
+  const hasErrors = false;
 
   return (
     <div className="Cadastro">
@@ -37,10 +55,14 @@ function Cadastro() {
         }}
         initialValues={{
           size: componentSize,
+          tipoDado: "",
+          nome: "",
+          valor: "",
+          data: "",
         }}
         onValuesChange={onFormLayoutChange}
         size={componentSize}
-        className={hasErrors ? "ant-form-item-has-error" : ""}
+        className={hasErrors ? "ant-form-item-ant-form-item-has-error" : ""}
       >
         <Form.Item
           label="Tipo de dado"
@@ -49,9 +71,9 @@ function Cadastro() {
             { required: true, message: "Por favor selecione um tipo de dado!" },
           ]}
         >
-          <Select>
+          <Select value={tipoDado} onChange={(value) => setTipoDado(value)}>
             <Select.Option value="entrada">Entrada</Select.Option>
-            <Select.Option value="Saída">Saída</Select.Option>
+            <Select.Option value="saída">Saída</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -59,7 +81,10 @@ function Cadastro() {
           name="nome"
           rules={[{ required: true, message: "Por favor insira um nome!" }]}
         >
-          <Input />
+          <Input
+            value={nome}
+            onChange={(event) => setNome(event.target.value)}
+          />
         </Form.Item>
         <Form.Item
           label="Valor R$"
@@ -71,6 +96,8 @@ function Cadastro() {
             min="0"
             step="0.01"
             placeholder="Valor em R$(real)"
+            value={valor}
+            onChange={(event) => setValor(event.target.value)}
           />
         </Form.Item>
         <Form.Item
@@ -78,14 +105,16 @@ function Cadastro() {
           name="data"
           rules={[{ required: true, message: "Por favor insira uma data!" }]}
         >
-          <DatePicker className="data" format={"DD-MM-YYYY"} locale={locale} />
+          <DatePicker
+            className="data"
+            format={"DD-MM-YYYY"}
+            locale={locale}
+            value={data}
+            onChange={(value) => setData(value)}
+          />
         </Form.Item>
         <Form.Item>
-          <Button
-            type="primary"
-            onClick={() => form.validateFields()}
-            className="cadastrar"
-          >
+          <Button type="primary" htmlType="submit" disabled={hasErrors}>
             Cadastrar
           </Button>
         </Form.Item>
