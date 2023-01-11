@@ -1,8 +1,9 @@
 import "./Assets/CSS/Geral.css";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 
 function Geral() {
+  const [data, setData] = useState([]);
   const columns = [
     {
       title: "ID",
@@ -25,22 +26,28 @@ function Geral() {
       dataIndex: "data",
     },
   ];
-  const data = [
-    {
-      id: "1",
-      dado: "Entrada",
-      nome: "Salário",
-      valor: "2160,00",
-      data: "05-01-2023",
-    },
-    {
-      id: "2",
-      dado: "Saída",
-      nome: "Faculdade",
-      valor: "400,00",
-      data: "05-01-2023",
-    },
-  ];
+
+  useEffect(() => {
+    fetch("http://localhost:5000/geral")
+    .then(response => response.json())
+    .then(res => {
+      let newData = []
+      for (let i = 0; i < res.length; i++) {
+        const dataAPI = 
+          {
+            id: res[i].id,
+            dado: res[i].tipoDado,
+            nome: res[i].nome,
+            valor: res[i].valor,
+            data: res[i].data,
+          }
+          newData.push(dataAPI)
+      }
+      setData(newData)
+    })
+    .catch(error => console.error(error));
+  }, []);
+
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };

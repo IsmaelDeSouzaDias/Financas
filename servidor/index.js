@@ -43,6 +43,14 @@ app.post("/cadastro", (req, res) => {
   });
 });
 
+// Criar uma rota GET para /geral
+app.get('/geral', (req, res) => {
+  // Conectar com a tabela
+  connection.query(`SELECT * FROM financeiro`, (error, results, fields) => {
+    res.send(results)
+  })
+})
+
 // Iniciar o servidor na porta 5000
 app.listen(5000, () => {
   console.log("Servidor iniciado na porta 5000");

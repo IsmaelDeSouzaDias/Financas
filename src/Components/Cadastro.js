@@ -16,7 +16,7 @@ function Cadastro() {
 
   const [form] = Form.useForm();
 
-  const getData = document.getElementById('data').value;
+  const getData = document.getElementById('data');
 
    const onFinish = async (values) => {
     await fetch("http://localhost:5000/cadastro", {
@@ -28,7 +28,7 @@ function Cadastro() {
         tipoDado: values.tipoDado,
         nome: values.nome,
         valor: values.valor,
-        data: getData,
+        data: getData.value,
       }),
     })
     .then(response => response.json())
