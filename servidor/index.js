@@ -44,6 +44,20 @@ app.post("/cadastro", (req, res) => {
 });
 
 // Criar uma rota GET para /geral
+app.get('/entrada', (req, res) => {
+  // Conectar com a tabela
+  connection.query(`SELECT * FROM financeiro WHERE tipoDado = 'Entrada'`, (error, results, fields) => {
+    res.send(results)
+  })
+})
+
+app.get('/saida', (req, res) => {
+  // Conectar com a tabela
+  connection.query(`SELECT * FROM financeiro WHERE tipoDado = 'Saída'`, (error, results, fields) => {
+    res.send(results)
+  })
+})
+
 app.get('/geral', (req, res) => {
   // Conectar com a tabela
   connection.query(`SELECT * FROM financeiro`, (error, results, fields) => {

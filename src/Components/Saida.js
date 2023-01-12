@@ -1,8 +1,10 @@
 import "./Assets/CSS/Saida.css";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 
 function Saida() {
+  const [data, setData] = useState([]);
+  const [total, setTotal] = useState(0);
   const columns = [
     {
       title: "ID",
@@ -25,15 +27,30 @@ function Saida() {
       dataIndex: "data",
     },
   ];
-  const data = [
-    {
-      id: "2",
-      dado: "Saída",
-      nome: "Faculdade",
-      valor: "400,00",
-      data: "05-01-2023",
-    },
-  ];
+
+  useEffect(() => {
+    fetch("http://localhost:5000/saida")
+      .then((response) => response.json())
+      .then((res) => {
+        let newData = [];
+        let totalValue = 0; 
+        for (let i = 0; i < res.length; i++) {
+          const dataAPI = {
+            id: res[i].id,
+            dado: res[i].tipoDado,
+            nome: res[i].nome,
+            valor: res[i].valor,
+            data: res[i].data,
+          };
+          newData.push(dataAPI);
+          totalValue += parseFloat(res[i].valor); 
+        }
+        setData(newData);
+        setTotal(totalValue); 
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
@@ -43,7 +60,7 @@ function Saida() {
       <h1 className="titulo">SAÍDA</h1>
       <Table columns={columns} dataSource={data} onChange={onChange} />
       <h4 className="total">
-        <span>Total:</span> R$ 400,00
+        <span>Total:</span> R$ {total.toLocaleString()}
       </h4>
     </div>
   );
